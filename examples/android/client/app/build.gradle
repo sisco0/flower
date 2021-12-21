@@ -2,14 +2,13 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "flwr.android_client"
         // API level 14+ is required for TLS since Google Play Services v10.2
-        minSdkVersion 24
-        targetSdkVersion 29
+        minSdkVersion 28
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -25,6 +24,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_64'
+            universalApk true
+        }
+    }
 
     dataBinding {
         enabled = true
@@ -61,7 +68,7 @@ protobuf {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -83,6 +90,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.android.support:design:28.0.0'
 
 }
 
